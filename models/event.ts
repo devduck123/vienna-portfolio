@@ -1,8 +1,7 @@
 export type Event = {
   id: string;
-  name: string;
-  position: string;
+  title: string;
   description: string;
-  startDate: number; // timestamp
-  endDate: number; // timestamp
+  date: number; // timestamp
+  images: string[]; // links to S3 object
 };
