@@ -1,9 +1,11 @@
-export const user = {
-  id: "1",
-  name: "Vienna Tan",
-  description: "23 year old Asian Female Event Planner",
-  dateOfBirth: new Date("9/9/1999").getTime(),
-};
+export const users = [
+  {
+    id: "1",
+    name: "Vienna Tan",
+    description: "23 year old Asian Female Event Planner",
+    dateOfBirth: new Date("9/9/1999").getTime(),
+  },
+];
 
 export const jobs = [
   {

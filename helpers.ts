@@ -28,3 +28,14 @@ export function respondErrorIdNotFound(
 
   res.status(404).json(customError);
 }
+
+export function respondErrorBadRequest(
+  res: NextApiResponse<any | CustomError>
+) {
+  const customError: CustomError = {
+    name: "request_invalidFormat",
+    message: `body format invalid`,
+  };
+
+  res.status(400).json(customError);
+}

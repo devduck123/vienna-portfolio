@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import type { Job } from "../../../models/job";
-import { jobs } from "../../../mockData";
+import type { Event } from "../../../models/event";
+import { events } from "../../../mockData";
 import {
   CustomError,
   respondErrorBadId,
@@ -10,9 +10,9 @@ import {
   respondErrorIdNotFound,
 } from "../../../helpers";
 
-export default function handleJob(
+export default function handleEvent(
   req: NextApiRequest,
-  res: NextApiResponse<Job | string | CustomError>
+  res: NextApiResponse<Event | string | CustomError>
 ) {
   const {
     query: { id, name },
@@ -25,13 +25,13 @@ export default function handleJob(
 
   switch (method) {
     case "GET":
-      getJobById(req, res, id);
+      getEventById(req, res, id);
       return;
     case "PUT":
-      updateJobById(req, res, id);
+      updateEventById(req, res, id);
       return;
     case "DELETE":
-      deleteJobById(req, res, id);
+      deleteEventById(req, res, id);
       return;
     default:
       res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
@@ -39,78 +39,71 @@ export default function handleJob(
   }
 }
 
-async function getJobById(
+async function getEventById(
   req: NextApiRequest,
-  res: NextApiResponse<Job | CustomError>,
+  res: NextApiResponse<Event | CustomError>,
   id: string
 ) {
   // fetch API data
-  const gotJob = jobs.find((job) => job.id === id);
-  if (!gotJob) {
+  const gotEvent = events.filter((event) => event.id === id);
+  if (!gotEvent || !gotEvent[0]) {
     respondErrorIdNotFound(res, id);
     return;
   }
 
-  res.status(200).json(gotJob);
+  res.status(200).json(gotEvent[0]);
 }
 
-async function updateJobById(
+async function updateEventById(
   req: NextApiRequest,
-  res: NextApiResponse<Job | CustomError>,
+  res: NextApiResponse<Event | CustomError>,
   id: string
 ) {
   const body = req.body;
-  if (!isValidJob(body)) {
+  if (!isValidEvent(body)) {
     respondErrorBadRequest(res);
     return;
   }
 
   // convert request body to write-model for DB
-  const writeJob: Job = {
+  const writeEvent: Event = {
     id: id, // not modifiable
-    name: body.name,
-    position: body.position,
+    title: body.title,
     description: body.description,
-    startDate: body.startDate,
-    endDate: body.endDate,
+    date: body.date,
+    images: body.images,
   };
 
   // update DB
-  const gotJob = jobs.find((job) => job.id === id);
-  if (!gotJob) {
+  const gotEvent = events.find((event) => event.id === id);
+  if (!gotEvent) {
     respondErrorIdNotFound(res, id);
     return;
   }
-  Object.assign(gotJob, writeJob);
+  Object.assign(gotEvent, writeEvent);
 
-  res.status(200).json(gotJob);
+  res.status(200).json(gotEvent);
 }
 
-async function deleteJobById(
+async function deleteEventById(
   req: NextApiRequest,
   res: NextApiResponse<string | CustomError>,
   id: string
 ) {
   // remove from DB
-  const gotJobIndex = jobs.findIndex((job) => job.id === id);
-  if (gotJobIndex === -1) {
+  const gotEventIndex = events.findIndex((event) => event.id === id);
+  if (gotEventIndex === -1) {
     respondErrorIdNotFound(res, id);
     return;
   }
 
-  jobs.splice(gotJobIndex, 1);
+  events.splice(gotEventIndex, 1);
 
-  res.status(200).json("successfully deleted job " + id);
+  res.status(200).json("successfully deleted event " + id);
 }
 
-function isValidJob(body: any): body is Job {
-  if (
-    !body ||
-    !body.name ||
-    !body.position ||
-    !body.description ||
-    !body.startDate
-  ) {
+function isValidEvent(body: any): body is Event {
+  if (!body || !body.title || !body.description || !body.date) {
     return false;
   }
 

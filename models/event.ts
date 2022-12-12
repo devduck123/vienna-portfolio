@@ -3,5 +3,5 @@ export type Event = {
   title: string;
   description: string;
   date: number; // timestamp
-  images: string[]; // links to S3 object
+  images?: string[] | undefined; // links to S3 object
 };

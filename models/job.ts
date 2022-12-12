@@ -4,5 +4,5 @@ export type Job = {
   position: string;
   description: string;
   startDate: number; // timestamp
-  endDate: number; // timestamp
+  endDate?: number | undefined; // timestamp
 };
