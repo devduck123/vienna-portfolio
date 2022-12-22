@@ -82,7 +82,7 @@ async function updateUserById(
 }
 
 function isValidUser(body: any): body is User {
-  if (!body || !body.name || !body.description || !body.dateOfBirth) {
+  if (!body || !body.name || !body.description || body.dateOfBirth == null) {
     return false;
   }
 

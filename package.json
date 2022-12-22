@@ -6,6 +6,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.231.0",
+    "@aws-sdk/lib-dynamodb": "^3.231.0",
+    "aws-sdk": "^2.1277.0",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"

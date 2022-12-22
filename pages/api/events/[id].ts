@@ -102,8 +102,8 @@ async function deleteEventById(
   res.status(200).json("successfully deleted event " + id);
 }
 
-function isValidEvent(body: any): body is Event {
-  if (!body || !body.title || !body.description || !body.date) {
+export function isValidEvent(body: any): body is Event {
+  if (!body || !body.title || !body.description || body.date == null) {
     return false;
   }
 

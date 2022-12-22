@@ -1,4 +1,8 @@
-export const users = [
+import { Event } from "./models/event";
+import { Job } from "./models/job";
+import { User } from "./models/user";
+
+export const users: User[] = [
   {
     id: "1",
     name: "Vienna Tan",
@@ -7,7 +11,7 @@ export const users = [
   },
 ];
 
-export const jobs = [
+export const jobs: Job[] = [
   {
     id: "j1",
     name: "job1",
@@ -26,7 +30,7 @@ export const jobs = [
   },
 ];
 
-export const events = [
+export const events: Event[] = [
   {
     id: "e1",
     title: "title1",

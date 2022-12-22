@@ -44,7 +44,7 @@ async function getJobById(
   res: NextApiResponse<Job | CustomError>,
   id: string
 ) {
-  // fetch API data
+  // query db
   const gotJob = jobs.find((job) => job.id === id);
   if (!gotJob) {
     respondErrorIdNotFound(res, id);
@@ -103,13 +103,13 @@ async function deleteJobById(
   res.status(200).json("successfully deleted job " + id);
 }
 
-function isValidJob(body: any): body is Job {
+export function isValidJob(body: any): body is Job {
   if (
     !body ||
     !body.name ||
     !body.position ||
     !body.description ||
-    !body.startDate
+    body.startDate == null
   ) {
     return false;
   }
