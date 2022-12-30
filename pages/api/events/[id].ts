@@ -1,14 +1,19 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-
 import type { Event } from "../../../models/event";
-import { events } from "../../../mockData";
 import {
   CustomError,
+  CustomSuccess,
   respondErrorBadId,
   respondErrorBadRequest,
+  respondErrorDB,
   respondErrorIdNotFound,
 } from "../../../helpers";
+import { ddbDocClient } from "../../../config/db";
+import {
+  GetCommand,
+  UpdateCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
 
 export default function handleEvent(
   req: NextApiRequest,
@@ -44,14 +49,24 @@ async function getEventById(
   res: NextApiResponse<Event | CustomError>,
   id: string
 ) {
-  // fetch API data
-  const gotEvent = events.filter((event) => event.id === id);
-  if (!gotEvent || !gotEvent[0]) {
-    respondErrorIdNotFound(res, id);
-    return;
-  }
+  const dbParams = {
+    TableName: "event",
+    Key: {
+      id: id,
+    },
+  };
 
-  res.status(200).json(gotEvent[0]);
+  try {
+    const data = await ddbDocClient.send(new GetCommand(dbParams));
+    if (!data?.Item) {
+      respondErrorIdNotFound(res, id);
+      return;
+    }
+    res.status(200).json(data.Item as unknown as Event);
+  } catch (err) {
+    console.error(err);
+    respondErrorDB(res);
+  }
 }
 
 async function updateEventById(
@@ -74,32 +89,66 @@ async function updateEventById(
     images: body.images,
   };
 
-  // update DB
-  const gotEvent = events.find((event) => event.id === id);
-  if (!gotEvent) {
-    respondErrorIdNotFound(res, id);
-    return;
-  }
-  Object.assign(gotEvent, writeEvent);
+  const dbParams = {
+    TableName: "event",
+    Key: { id: id },
+    ExpressionAttributeNames: {
+      "#title": "title",
+      "#description": "description",
+      "#date": "date",
+      "#images": "images",
+    },
+    UpdateExpression:
+      "SET #title = :title, #description = :description, #date = :date, #images = :images",
+    ExpressionAttributeValues: {
+      ":title": writeEvent.title,
+      ":description": writeEvent.description,
+      ":date": writeEvent.date,
+      ":images": writeEvent.images,
+    },
+    ConditionExpression: "attribute_exists(id)",
+    ReturnValues: "ALL_NEW",
+  };
 
-  res.status(200).json(gotEvent);
+  try {
+    const data = await ddbDocClient.send(new UpdateCommand(dbParams));
+    res.status(200).json(data.Attributes as unknown as Event);
+  } catch (err: any) {
+    console.error(err);
+    if (err?.name === "ConditionalCheckFailedException") {
+      respondErrorIdNotFound(res, id);
+      return;
+    }
+    respondErrorDB(res);
+  }
 }
 
 async function deleteEventById(
   req: NextApiRequest,
-  res: NextApiResponse<string | CustomError>,
+  res: NextApiResponse<CustomSuccess | CustomError>,
   id: string
 ) {
-  // remove from DB
-  const gotEventIndex = events.findIndex((event) => event.id === id);
-  if (gotEventIndex === -1) {
-    respondErrorIdNotFound(res, id);
-    return;
+  const dbParams = {
+    TableName: "event",
+    Key: {
+      id: id,
+    },
+    ConditionExpression: "attribute_exists(id)",
+  };
+
+  try {
+    const data = await ddbDocClient.send(new DeleteCommand(dbParams));
+    res
+      .status(200)
+      .json(`Success, event (${id}) was deleted.` as CustomSuccess);
+  } catch (err: any) {
+    console.error(err);
+    if (err?.name === "ConditionalCheckFailedException") {
+      respondErrorIdNotFound(res, id);
+      return;
+    }
+    respondErrorDB(res);
   }
-
-  events.splice(gotEventIndex, 1);
-
-  res.status(200).json("successfully deleted event " + id);
 }
 
 export function isValidEvent(body: any): body is Event {
