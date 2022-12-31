@@ -84,7 +84,7 @@ async function createJob(
     res
       .status(200)
       .json(
-        `Successfully created event. (ID is ${writeJob.id})` as CustomSuccess
+        `Successfully created job. (ID is ${writeJob.id})` as CustomSuccess
       );
   } catch (err) {
     console.error(err);

@@ -17,7 +17,7 @@ import {
 
 export default function handleEvent(
   req: NextApiRequest,
-  res: NextApiResponse<Event | string | CustomError>
+  res: NextApiResponse<Event | CustomSuccess | CustomError>
 ) {
   const {
     query: { id, name },
@@ -132,9 +132,7 @@ async function deleteEventById(
 ) {
   const dbParams = {
     TableName: TABLE_NAME,
-    Key: {
-      id: id,
-    },
+    Key: { id: id },
     ConditionExpression: "attribute_exists(id)",
   };
 

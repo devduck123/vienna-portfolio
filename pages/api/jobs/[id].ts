@@ -2,17 +2,24 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import type { Job } from "../../../models/job";
-import { jobs } from "../../../mockData";
 import {
   CustomError,
+  CustomSuccess,
   respondErrorBadId,
   respondErrorBadRequest,
+  respondErrorDB,
   respondErrorIdNotFound,
 } from "../../../helpers";
+import { ddbDocClient } from "../../../config/db";
+import {
+  GetCommand,
+  UpdateCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
 
 export default function handleJob(
   req: NextApiRequest,
-  res: NextApiResponse<Job | string | CustomError>
+  res: NextApiResponse<Job | CustomSuccess | CustomError>
 ) {
   const {
     query: { id, name },
@@ -39,19 +46,30 @@ export default function handleJob(
   }
 }
 
+const TABLE_NAME = "job";
+
 async function getJobById(
   req: NextApiRequest,
   res: NextApiResponse<Job | CustomError>,
   id: string
 ) {
   // query db
-  const gotJob = jobs.find((job) => job.id === id);
-  if (!gotJob) {
-    respondErrorIdNotFound(res, id);
-    return;
-  }
+  const dbParams = {
+    TableName: TABLE_NAME,
+    Key: { id: id },
+  };
 
-  res.status(200).json(gotJob);
+  try {
+    const data = await ddbDocClient.send(new GetCommand(dbParams));
+    if (!data?.Item) {
+      respondErrorIdNotFound(res, id);
+      return;
+    }
+    res.status(200).json(data.Item as unknown as Job);
+  } catch (err) {
+    console.error(err);
+    respondErrorDB(res);
+  }
 }
 
 async function updateJobById(
@@ -76,31 +94,64 @@ async function updateJobById(
   };
 
   // update DB
-  const gotJob = jobs.find((job) => job.id === id);
-  if (!gotJob) {
-    respondErrorIdNotFound(res, id);
-    return;
-  }
-  Object.assign(gotJob, writeJob);
+  const dbParams = {
+    TableName: TABLE_NAME,
+    Key: { id: id },
+    ExpressionAttributeNames: {
+      "#name": "name",
+      "#position": "position",
+      "#description": "description",
+      "#startDate": "startDate",
+      "#endDate": "endDate",
+    },
+    UpdateExpression:
+      "SET #name = :name, #position = :position, #description = :description, #startDate = :startDate, #endDate = :endDate",
+    ExpressionAttributeValues: {
+      ":name": writeJob.name,
+      ":position": writeJob.position,
+      ":description": writeJob.description,
+      ":startDate": writeJob.startDate,
+      ":endDate": writeJob.endDate,
+    },
+    ConditionExpression: "attribute_exists(id)",
+    ReturnValues: "ALL_NEW",
+  };
 
-  res.status(200).json(gotJob);
+  try {
+    const data = await ddbDocClient.send(new UpdateCommand(dbParams));
+    res.status(200).json(data.Attributes as unknown as Job);
+  } catch (err: any) {
+    console.error(err);
+    if (err?.name === "ConditionalCheckFailedException") {
+      respondErrorIdNotFound(res, id);
+      return;
+    }
+    respondErrorDB(res);
+  }
 }
 
 async function deleteJobById(
   req: NextApiRequest,
-  res: NextApiResponse<string | CustomError>,
+  res: NextApiResponse<CustomSuccess | CustomError>,
   id: string
 ) {
-  // remove from DB
-  const gotJobIndex = jobs.findIndex((job) => job.id === id);
-  if (gotJobIndex === -1) {
-    respondErrorIdNotFound(res, id);
-    return;
+  const dbParams = {
+    TableName: TABLE_NAME,
+    Key: { id: id },
+    ConditionExpression: "attribute_exists(id)",
+  };
+
+  try {
+    const data = await ddbDocClient.send(new DeleteCommand(dbParams));
+    res.status(200).json(`Success, job (${id}) was deleted.` as CustomSuccess);
+  } catch (err: any) {
+    console.error(err);
+    if (err?.name === "ConditionalCheckFailedException") {
+      respondErrorIdNotFound(res, id);
+      return;
+    }
+    respondErrorDB(res);
   }
-
-  jobs.splice(gotJobIndex, 1);
-
-  res.status(200).json("successfully deleted job " + id);
 }
 
 export function isValidJob(body: any): body is Job {
