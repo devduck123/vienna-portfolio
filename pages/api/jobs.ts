@@ -1,14 +1,20 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Job } from "../../models/job";
-import { jobs } from "../../mockData";
-import { CustomError, respondErrorBadRequest } from "../../helpers";
+import {
+  CustomError,
+  CustomSuccess,
+  respondErrorBadRequest,
+  respondErrorDB,
+} from "../../helpers";
 import { isValidJob } from "./jobs/[id]";
 import { nanoid } from "nanoid";
+import { ddbDocClient } from "../../config/db";
+import { ScanCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export default function handleJob(
   req: NextApiRequest,
-  res: NextApiResponse<Job | Job[] | CustomError>
+  res: NextApiResponse<CustomSuccess | Job[] | CustomError>
 ) {
   const {
     query: { name },
@@ -28,19 +34,33 @@ export default function handleJob(
   }
 }
 
-async function getAllJobs(req: NextApiRequest, res: NextApiResponse<Job[]>) {
-  // query db
-  const gotJobs = jobs;
+const TABLE_NAME = "job";
 
-  res.status(200).json(gotJobs);
+async function getAllJobs(
+  req: NextApiRequest,
+  res: NextApiResponse<Job[] | CustomError>
+) {
+  // query db
+  const dbParams = {
+    TableName: TABLE_NAME,
+  };
+
+  try {
+    const data = await ddbDocClient.send(new ScanCommand(dbParams));
+    res.status(200).json(data.Items as unknown as Job[]);
+  } catch (err) {
+    console.error(err);
+    respondErrorDB(res);
+  }
 }
 async function createJob(
   req: NextApiRequest,
-  res: NextApiResponse<Job | Job[] | CustomError>
+  res: NextApiResponse<CustomSuccess | CustomError>
 ) {
   const body = req.body;
   if (!isValidJob(body)) {
     respondErrorBadRequest(res);
+    return;
   }
 
   // map body with DTO
@@ -54,7 +74,20 @@ async function createJob(
   };
 
   // write to db
-  jobs.push(writeJob);
+  const dbParams = {
+    TableName: TABLE_NAME,
+    Item: writeJob,
+  };
 
-  res.status(200).json(writeJob);
+  try {
+    const data = await ddbDocClient.send(new PutCommand(dbParams));
+    res
+      .status(200)
+      .json(
+        `Successfully created event. (ID is ${writeJob.id})` as CustomSuccess
+      );
+  } catch (err) {
+    console.error(err);
+    respondErrorDB(res);
+  }
 }

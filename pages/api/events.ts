@@ -60,6 +60,7 @@ async function createEvent(
   const body = req.body;
   if (!isValidEvent(body)) {
     respondErrorBadRequest(res);
+    return;
   }
 
   // map body with DTO
