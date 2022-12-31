@@ -44,13 +44,15 @@ export default function handleEvent(
   }
 }
 
+const TABLE_NAME = "event";
+
 async function getEventById(
   req: NextApiRequest,
   res: NextApiResponse<Event | CustomError>,
   id: string
 ) {
   const dbParams = {
-    TableName: "event",
+    TableName: TABLE_NAME,
     Key: {
       id: id,
     },
@@ -90,7 +92,7 @@ async function updateEventById(
   };
 
   const dbParams = {
-    TableName: "event",
+    TableName: TABLE_NAME,
     Key: { id: id },
     ExpressionAttributeNames: {
       "#title": "title",
@@ -129,7 +131,7 @@ async function deleteEventById(
   id: string
 ) {
   const dbParams = {
-    TableName: "event",
+    TableName: TABLE_NAME,
     Key: {
       id: id,
     },

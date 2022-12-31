@@ -33,13 +33,15 @@ export default function handleEvent(
   }
 }
 
+const TABLE_NAME = "event";
+
 async function getAllEvents(
   req: NextApiRequest,
   res: NextApiResponse<Event[] | CustomError>
 ) {
   // query db
   const dbParams = {
-    TableName: "event",
+    TableName: TABLE_NAME,
   };
 
   try {
@@ -71,7 +73,7 @@ async function createEvent(
 
   // write to db
   const dbParams = {
-    TableName: "event",
+    TableName: TABLE_NAME,
     Item: writeEvent,
   };
 
