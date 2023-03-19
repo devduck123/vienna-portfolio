@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       </Head>
 
       <section className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">Portfolio Title</h1>
+        <h1 className="text-6xl font-bold">Hello, I'm Vienna!</h1>
         <p className="mt-3 mb-3 text-2xl">Content</p>
       </section>
     </Layout>

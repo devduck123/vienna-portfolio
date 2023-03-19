@@ -7,7 +7,7 @@ type Props = {
 };
 
 const name = "Vienna Tan";
-const siteTitle = "Portfolio";
+const siteTitle = "Vienna Tan Portfolio";
 
 export default function Layout(props: Props) {
   return (
@@ -34,7 +34,7 @@ export default function Layout(props: Props) {
         <link rel="icon" href="/favicon/favicon.ico" />
         <meta
           name="description"
-          content="Learn how to build a personal website using Next.js"
+          content="Portfolio for Vienna Tan"
         />
         <meta
           property="og:image"
@@ -54,7 +54,7 @@ export default function Layout(props: Props) {
       </header>
       <main>{props.children}</main>
       <footer className="flex h-24 w-full items-center justify-center border-t">
-        &copy; 2022 Vienna Tan
+        &copy; 2023 Vienna Tan
       </footer>
     </section>
   );
