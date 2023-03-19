@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Layout from "../components/Layout";
+import Jobs from "../components/Jobs";
 
 const Home: NextPage = () => {
   return (
@@ -9,10 +10,16 @@ const Home: NextPage = () => {
         <title>Home</title>
       </Head>
 
-      <section className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">Hello, I'm Vienna!</h1>
-        <p className="mt-3 mb-3 text-2xl">Content</p>
+      {/* Intro section */}
+      <section className="bg-green-200 text-center p-6">
+        <h1 className="text-6xl font-bold">Vienna Tan</h1>
+        <span className="m-3 text-2xl">
+          An event professional with 8+ years of industry experience.
+        </span>
       </section>
+
+      {/* Experience section */}
+      <Jobs />
     </Layout>
   );
 };

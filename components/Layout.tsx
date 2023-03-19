@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
+import Header from "./Header";
 
 type Props = {
   children?: any;
@@ -11,7 +11,7 @@ const siteTitle = "Vienna Tan Portfolio";
 
 export default function Layout(props: Props) {
   return (
-    <section className="layout flex min-h-screen flex-col items-center justify-center py-2">
+    <>
       <Head>
         <link
           rel="apple-touch-icon"
@@ -32,10 +32,7 @@ export default function Layout(props: Props) {
         />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <link rel="icon" href="/favicon/favicon.ico" />
-        <meta
-          name="description"
-          content="Portfolio for Vienna Tan"
-        />
+        <meta name="description" content="Portfolio for Vienna Tan" />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
@@ -45,17 +42,11 @@ export default function Layout(props: Props) {
         <meta name="og:title" content={`${siteTitle} ${name}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header>
-        <h1>Header</h1>
-        <nav>
-          <h1>Navigation</h1>
-          <Link href="/">Home</Link>
-        </nav>
-      </header>
-      <main>{props.children}</main>
-      <footer className="flex h-24 w-full items-center justify-center border-t">
+      <Header />
+      <main className="mb-12">{props.children}</main>
+      <footer className="w-full mb-0 h-6 text-center bg-red-200">
         &copy; 2023 Vienna Tan
       </footer>
-    </section>
+    </>
   );
 }
