@@ -44,7 +44,7 @@ export default function Layout(props: Props) {
       </Head>
       <Header />
       <main className="mb-12">{props.children}</main>
-      <footer className="w-full mb-0 h-6 text-center bg-red-200">
+      <footer className="w-full mb-0 h-6 text-center">
         &copy; 2023 Vienna Tan
       </footer>
     </>

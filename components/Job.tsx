@@ -3,12 +3,17 @@ import { convertTimestampToDateString } from "../utils";
 
 export default function Job(props: JobType) {
   return (
-    <div className="w-10/12 m-2 p-6 rounded-lg shadow-md bg-orange-300">
-      <h1>Name: {props.name}</h1>
-      <h1>Position: {props.position}</h1>
-      <h1>Description: {props.description}</h1>
-      <h1>Start Date: {convertTimestampToDateString(props.startDate)}</h1>
-      <h1>End Date: {convertTimestampToDateString(props.endDate)}</h1>
+    <div className="w-full max-w-2xl m-2 p-6 rounded-lg shadow-md bg-orange-300 grid grid-cols-2 gap-4">
+      <span>Name:</span>
+      <span>{props.name}</span>
+      <span>Position:</span>
+      <span>{props.position}</span>
+      <span>Description:</span>
+      <span>{props.description}</span>
+      <span>Start Date:</span>
+      <span>{convertTimestampToDateString(props.startDate)}</span>
+      <span>End Date:</span>
+      <span>{convertTimestampToDateString(props.endDate)}</span>
     </div>
   );
 }

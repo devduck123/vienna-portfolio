@@ -16,7 +16,8 @@ export const jobs: Job[] = [
     id: "j1",
     name: "CBRE@Meta",
     position: "Meeting & Event Planner",
-    description: "Support Meta C-level Execs and teams with internal event requests, including company-wide events and All Hands, summits, fireside chats, video shoots in Meta Reality Labs, and more...",
+    description:
+      "Support Meta C-level Execs and teams with internal event requests, including company-wide events and All Hands, summits, fireside chats, video shoots in Meta Reality Labs, and more...",
     startDate: new Date("3/7/2022").getTime(),
     endDate: new Date("4/1/2023").getTime(),
   },
@@ -27,14 +28,6 @@ export const jobs: Job[] = [
     description: "Execute events for university post-pandemic",
     startDate: new Date("5/1/2021").getTime(),
     endDate: new Date("3/1/2022").getTime(),
-  },
-  {
-    id: "j3",
-    name: "job3",
-    position: "position3",
-    description: "description3",
-    startDate: new Date("1/1/2020").getTime(),
-    endDate: new Date("2/2/2021").getTime(),
   },
 ];
 

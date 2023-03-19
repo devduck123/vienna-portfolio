@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Layout from "../components/Layout";
 import Jobs from "../components/Jobs";
+import Fun from "../components/Fun";
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +12,7 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Intro section */}
-      <section className="bg-green-200 text-center p-6">
+      <section className="text-center p-6">
         <h1 className="text-6xl font-bold">Vienna Tan</h1>
         <span className="m-3 text-2xl">
           An event professional with 8+ years of industry experience.
@@ -20,6 +21,9 @@ const Home: NextPage = () => {
 
       {/* Experience section */}
       <Jobs />
+
+      {/* Fun section */}
+      <Fun />
     </Layout>
   );
 };
