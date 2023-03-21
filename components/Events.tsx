@@ -26,7 +26,7 @@ export default function Events() {
   );
 
   return (
-    <section className="flex flex-col justify-center items-center p-6 bg-blue-200">
+    <section className="flex flex-col justify-center items-center p-6">
       {/* <h1 className="text-5xl font-bold mb-4">Events</h1> */}
       {eventsAsElements}
     </section>

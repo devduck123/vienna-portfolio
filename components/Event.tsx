@@ -4,18 +4,18 @@ import { convertTimestampToDateString, getYearFromString } from "../utils";
 
 export default function Event(props: EventType) {
   return (
-    <div className="bg-red-200 border border-solid border-slate-200 rounded-md p-6 m-2 w-full flex justify-evenly items-center md:flex-row flex-col-reverse">
+    <div className="border border-solid border-slate-200 p-6 m-2 w-full flex justify-evenly items-center md:flex-row flex-col-reverse bg-blue-200 rounded-3xl">
       {/* Description section */}
-      <div className="bg-green-200 p-4 md:w-7/12">
+      <div className="p-4 md:w-7/12">
         <h2 className="text-3xl">{props.title}</h2>
         <p className="mb-2">
           {getYearFromString(convertTimestampToDateString(props.date))}
         </p>
         <p className="leading-relaxed">{props.description}</p>
-        <a>{props.images}</a>
+        {/* <a>{props.images}</a> */}
       </div>
       {/* Image Grid section */}
-      <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 md:grid-rows-1 gap-1 p-2 bg-green-200">
+      <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 md:grid-rows-1 gap-1 p-2 bg-amber-100">
         <Image
           src="/images/tommy.jpg"
           alt="tommy"
