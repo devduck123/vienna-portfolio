@@ -15,7 +15,7 @@ export default function Event(props: EventType) {
         {/* <a>{props.images}</a> */}
       </div>
       {/* Image Grid section */}
-      <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 md:grid-rows-1 gap-1 p-2 bg-amber-100">
+      <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 md:grid-rows-1 gap-1 p-2 bg-gradient-to-b from-pink-200 to-orange-200">
         <Image
           src="/images/tommy.jpg"
           alt="tommy"
