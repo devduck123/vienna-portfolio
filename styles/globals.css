@@ -88,3 +88,9 @@ a:hover {
     transition-delay: 0s !important;
   }
 }
+
+@media (max-width: 768px) {
+  .md\:flex-col {
+    flex-direction: column;
+  }
+}
