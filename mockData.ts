@@ -36,24 +36,42 @@ export const events: Event[] = [
     id: "e1",
     title: "Welcome Back Events at Meta",
     description:
-      "Later in 2022, Meta organized another series of events to welcome all Metamates the office across the Bay Area. With a considerable budget, we were able to host these events in our favorite vendors for decoration, entertainment, and catering. My favorite activities included live music, local food and coffee vendors, art workshops, pumpkin decorating, movie nights, swag giveaways, photo booths, toy drives and care packages to give back to the community, and more. I’m so proud to have lead and executed all graphic communications and design for this project. I had a blast designing marketing materials, event signage, stickers, and Facebook posts to promote these events. Each of these events hosted up to 1,500 attendees guaranteed to have a fun time!",
+      "Later in 2022, Meta organized a series of events to welcome all Metamates to the office across the Bay Area. With a considerable budget, we were able to host these events with our favorite vendors for decoration, entertainment, and catering. My favorite activities included live music, local food and coffee vendors, art workshops, pumpkin decorating, movie nights, swag giveaways, photo booths, toy drives, care packages to give back to the community, and more. I'm proud to have led and executed all graphic communications and design for this project. I had a great time designing marketing materials, event signage, stickers, and Facebook posts to promote these events. Each of these events hosted up to 1,500 attendees, guaranteeing a fun time for all!",
     date: new Date("2/22/2022").getTime(),
-    images: ["url1", "url2", "url3"],
+    // images: ["url1", "url2", "url3"],
+    images: [
+      "/images/welcome-back/coffee-music.jpeg",
+      "/images/welcome-back/flannel-fizz.jpeg",
+      "/images/welcome-back/donuts.jpg",
+      "/images/welcome-back/vr.jpeg",
+    ],
   },
   {
     id: "e2",
     title: "Ambassador Program at Meta",
     description:
-      "Meta organized a campus-wide events to welcome all Metamates back to the office. With this initiative, we worked closely with our cross-functional teams to highlight different Meta groups and amenities that our facilities managed to support Meta employees. We had scavenger hunt, swag giveaway, karaoke time, donation drives for volunteer groups local to each campus, and more. Event was so successful, our team was asked to host a second session later that year!",
+      "Meta organized a campus-wide event to welcome all Metamates back to the office. During this initiative, we worked closely with our cross-functional teams to showcase the different Meta groups and amenities that our facilities offer to support Meta employees. We had a scavenger hunt, swag giveaway, karaoke time, and donation drives for volunteer groups local to each campus, among other activities. The event was so successful that our team was asked to host a second session later that year!",
     date: new Date("2/22/2022").getTime(),
-    images: ["url1", "url2", "url3"],
+    // images: ["url1", "url2", "url3"],
+    images: [
+      "/images/ambassador-program/deck-drinks.jpeg",
+      "/images/ambassador-program/goodies.jpeg",
+      "/images/ambassador-program/nature.jpg",
+      "/images/ambassador-program/stickers.jpg",
+    ],
   },
   {
     id: "e3",
     title: "CBRE LINK@Summer Fest",
     description:
-      "CBRE LINK organized their first in person gather since the pandemic in San Mateo, CA. I led all digital communications and graphic designs for this event, which was so much fun especially when I got to eat my own designs on cookies!",
+      "CBRE LINK organized their first in-person gathering since the pandemic in San Mateo, CA. I led all digital communications and graphic designs for this event, which was so much fun. I even got to eat my own designs on cookies!",
     date: new Date("2/22/2022").getTime(),
-    images: ["url1", "url2", "url3"],
+    // images: ["url1", "url2", "url3"],
+    images: [
+      "/images/summerfest/1.jpeg",
+      "/images/summerfest/2.jpeg",
+      "/images/summerfest/3.jpeg",
+      "/images/summerfest/4.jpeg",
+    ],
   },
 ];

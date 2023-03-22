@@ -2,6 +2,17 @@ import Image from "next/image";
 import { Event as EventType } from "../models/event";
 import { convertTimestampToDateString, getYearFromString } from "../utils";
 
+function parseImageLink(
+  imageNumber: number,
+  imageUrls: string[] | undefined
+): string {
+  if (imageUrls == undefined || imageUrls.length <= imageNumber) {
+    return "/images/tommy.jpg";
+  }
+
+  return imageUrls[imageNumber];
+}
+
 export default function Event(props: EventType) {
   return (
     <div className="border border-solid border-slate-200 p-6 m-2 w-full flex justify-evenly items-center md:flex-row flex-col-reverse bg-blue-200 rounded-3xl">
@@ -17,28 +28,28 @@ export default function Event(props: EventType) {
       {/* Image Grid section */}
       <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 md:grid-rows-1 gap-1 p-2 bg-gradient-to-b from-pink-200 to-orange-200">
         <Image
-          src="/images/tommy.jpg"
+          src={parseImageLink(0, props.images)}
           alt="tommy"
           width="192"
           height="192"
           className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
         />
         <Image
-          src="/images/tommy.jpg"
+          src={parseImageLink(1, props.images)}
           alt="tommy"
           width="192"
           height="192"
           className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
         />
         <Image
-          src="/images/tommy.jpg"
+          src={parseImageLink(2, props.images)}
           alt="tommy"
           width="192"
           height="192"
           className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
         />
         <Image
-          src="/images/tommy.jpg"
+          src={parseImageLink(3, props.images)}
           alt="tommy"
           width="192"
           height="192"
