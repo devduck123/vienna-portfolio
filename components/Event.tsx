@@ -30,30 +30,30 @@ export default function Event(props: EventType) {
         <Image
           src={parseImageLink(0, props.images)}
           alt="tommy"
-          width="192"
-          height="192"
-          className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
+          width={240}
+          height={240}
+          className="object-cover object-center col-span-1 row-span-1 md:col-span-2 w-60 h-60"
         />
         <Image
           src={parseImageLink(1, props.images)}
           alt="tommy"
-          width="192"
-          height="192"
-          className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
+          width={240}
+          height={240}
+          className="object-cover object-center col-span-1 row-span-1 md:col-span-2 w-60 h-60"
         />
         <Image
           src={parseImageLink(2, props.images)}
           alt="tommy"
-          width="192"
-          height="192"
-          className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
+          width={240}
+          height={240}
+          className="object-cover object-center col-span-1 row-span-1 md:col-span-2 w-60 h-60"
         />
         <Image
           src={parseImageLink(3, props.images)}
           alt="tommy"
-          width="192"
-          height="192"
-          className="w-full h-full object-cover col-span-1 row-span-1 md:col-span-2"
+          width={240}
+          height={240}
+          className="object-cover object-center col-span-1 row-span-1 md:col-span-2 w-60 h-60"
         />
       </div>
     </div>
