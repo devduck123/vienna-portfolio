@@ -14,8 +14,8 @@ const Home: NextPage = () => {
       {/* Intro section */}
       <section className="text-center p-6">
         <h1 className="text-6xl font-bold">Vienna Tan</h1>
-        <span className="m-3 text-2xl">
-          An event professional with 8+ years of industry experience.
+        <span className="m-3 md:text-2xl text-xl">
+          Seasoned Event Professional with 8+ Years of Industry Experience
         </span>
       </section>
 

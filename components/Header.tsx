@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header className="bg-gray-100">
       <nav className="flex-auto justify-center">
-        <ul className="flex justify-evenly items-center text-lg">
+        <ul className="flex justify-center md:justify-end md:mr-16 lg:mr-64 items-center text-lg gap-4 md:gap-8">
           <li>
             <Link href="/">Home</Link>
           </li>
