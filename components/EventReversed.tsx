@@ -49,7 +49,7 @@ export default function EventReversed(props: EventType) {
       </div>
       {/* Description section */}
       <div className="p-4 md:w-7/12">
-        <h2 className="text-3xl">{props.title}</h2>
+        <h2 className="text-3xl font-bold">{props.title}</h2>
         <p className="mb-2">
           {getYearFromString(convertTimestampToDateString(props.date))}
         </p>

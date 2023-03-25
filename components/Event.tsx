@@ -18,7 +18,7 @@ export default function Event(props: EventType) {
     <div className="border border-solid border-slate-200 p-6 m-2 w-full flex justify-evenly items-center md:flex-row flex-col-reverse bg-blue-200 rounded-3xl">
       {/* Description section */}
       <div className="p-4 md:w-7/12">
-        <h2 className="text-3xl">{props.title}</h2>
+        <h2 className="text-3xl font-bold">{props.title}</h2>
         <p className="mb-2">
           {getYearFromString(convertTimestampToDateString(props.date))}
         </p>
